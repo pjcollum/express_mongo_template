@@ -1,14 +1,15 @@
- <div>
+ <div id="formDiv">
  
- <form action="/" method="POST">     {{!--posts to the / --}}
-    <label for="Name">Name:</label>
-    <input type="text" name="name">
-    <label for="email">Email:</label>
-    <input type="text" name="email">
-    <label for="password">Password:</label>
-    <input type="text" name="password">
+ <form class="formClass" action="/" method="POST">     {{!--posts to the / --}}
+    <label for="signUp">Start your free 14-day trial of Shopify</label> <br>
+    <input class="nameInput" placeholder="Name" type="text" name="name"> <br>
+    
+    <input class="emailInput" placeholder="Email Address" type="text" name="email"> <br>
+    
+    <input class="passwordInput" placeholder="Password" type="password" name="password"> <br>
     <br>
-    <input type="submit" value="send">
+    <input class="submitBtn" type="submit" value="Create Account">
 </form>
-
 </div>
+
+<h1>{{err}}</h1>

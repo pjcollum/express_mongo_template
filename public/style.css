@@ -1,0 +1,37 @@
+#navDiv{
+    background-color: #3a3d3d;
+    font-size: 30px;
+    flex-direction: row;
+    color: white;
+}
+input.submitBtn, button{
+    background-color: rgb(97, 150, 97);
+    color:white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 10%;
+    
+}
+input{
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 4px;
+}
+#formDiv{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 5%;
+    
+}
+body{
+    font-family:  helvetica;
+    background-color: #212326;
+    color: white;
+}

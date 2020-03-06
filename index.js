@@ -5,13 +5,18 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+const getUsers = require('./lib/getUsers');
+
 require('dotenv').config();                 //linked to .env file
 
-mongoose.connect('mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@usersignup-zziud.mongodb.net/userdb?retryWrites=true&w=majority',
-{
-    useNewUrlParser:true,
-    useUnifiedTopology: true
-});
+// const mongoose = require('mongoose');
+const UserSchema = require('./models/user');
+
+mongoose.connect(`mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@usersignup-zziud.mongodb.net/userdb?retryWrites=true&w=majority`,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
 
 
 
@@ -27,18 +32,68 @@ app.engine('.hbs', hbs({        //handlebars view engine
 app.set('view engine', '.hbs');
 
 
-
-
 app.get('/', async (req, res) => {     //async function
     res.render('index');
 });
+
+app.post('/', async (req, res) => {
+    let username = req.body.username;
+    let email = req.body.email
+    let password = req.body.password
+    
+    let docs = await getUsers.email(email);
+    let docs1 = await getUsers.username(username);
+         //console.log(docs);                  //prints in terminal
+    
+        if(docs.length > 0){
+            res.render('index', {err: "a user with this email already exists"})
+            return;
+        } 
+        if(docs1.length > 0){
+            res.render('index', {err: "a user with this username already exists"})
+            return;
+        } 
+
+    const user = new UserSchema({
+        username: username,
+        email: email,
+        password: password
+    })
+    user.save();
+
+    res.render('profile')
+
+    //res.render('index', { data: { name, email, password } });
+
+})
 app.get('/login', async (req, res) => {     //async function
     res.render('logIn');
 });
-app.get('/signup', async (req, res) => {     //async function
-    res.render('signUp');
+
+app.post('/login', async (req, res) => {
+    // let username = req.body.username
+    // let email = req.body.email
+    // let password = req.body.password
+    
+   
+    // let docs1 = await getUsers.username(username);
+    //      console.log(docs);                  //prints in terminal
+    
+    // if(docs1.length > 0){
+    //     res.render('index', {err: "a user with this username already exists"})
+    //     return;
+    // } 
+    // const user = new UserSchema({
+    //     email: email,
+    //     password: password
+    // })
+    // user.save();
+    // res.render('profile')
+})
+app.get('/profile', async (req, res) => {     //async function
+    res.render('profile');
 });
 
-app.listen(3000, () => {                            //opens code in local host port 300
-    console.log('server listening on port 3000');
+app.listen(3006, () => {                            //opens code in local host port 300
+    console.log('server listening on port 3006');
 });
